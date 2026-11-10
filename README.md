@@ -14,7 +14,16 @@ Microsserviço de atendimento conversacional inteligente construído em Python c
 3. **Transbordo Humano:** Redirecionamento automático de chamados críticos ou complexos.
 
 ## 🏃 Como Executar
+
+Para habilitar respostas flexíveis com IA, copie `.env.example` para `.env` e
+preencha `OPENAI_API_KEY` com uma chave válida. O modelo padrão
+é `gpt-4o-mini`; ele pode ser alterado em `OPENAI_MODEL`. Sem a chave, o serviço
+continua disponível com as respostas da FAQ local e informa essa limitação para
+perguntas abertas.
+
 ```bash
+cp .env.example .env
+# Edite .env e substitua OPENAI_API_KEY pela sua chave
 docker compose up --build
 ```
 

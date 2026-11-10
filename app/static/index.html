@@ -173,13 +173,17 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ user_id: "demo", message }),
           });
-          if (!response.ok) throw new Error("Falha na resposta do servidor");
-
           const result = await response.json();
+          if (!response.ok) {
+            throw new Error(result.detail || "Não foi possível responder agora. Tente novamente.");
+          }
           if (result.transferred_to_human) addTransferNotice();
           addMessage(result.response, "assistant");
         } catch (error) {
-          addMessage("Não foi possível conectar ao serviço agora. Tente novamente em instantes.", "assistant");
+          addMessage(
+            error instanceof Error ? error.message : "Não foi possível conectar ao serviço agora.",
+            "assistant",
+          );
         } finally {
           sendButton.disabled = false;
           input.focus();
