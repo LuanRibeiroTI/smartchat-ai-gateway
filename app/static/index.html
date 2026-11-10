@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#103d39" />
+    <title>SmartChat AI Gateway | Blip</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      :root { font-family: "DM Sans", sans-serif; }
+      body { margin: 0; }
+      .chat-pattern {
+        background-color: #edf2ef;
+        background-image: radial-gradient(#d5dfda 0.7px, transparent 0.7px);
+        background-size: 19px 19px;
+      }
+      .scrollbar-thin { scrollbar-width: thin; scrollbar-color: #b7c8c0 transparent; }
+    </style>
+  </head>
+  <body class="bg-[#e7eeea] text-[#203532] antialiased">
+    <main class="mx-auto flex h-[100dvh] w-full max-w-[1240px] overflow-hidden bg-white md:my-6 md:h-[calc(100dvh-48px)] md:min-h-[560px] md:rounded-[18px] md:shadow-[0_24px_70px_rgba(27,56,53,0.12)]">
+      <aside class="hidden w-[310px] shrink-0 flex-col border-r border-[#e7ece9] bg-[#fbfcfb] md:flex">
+        <div class="flex h-[76px] items-center justify-between border-b border-[#e7ece9] px-6">
+          <a href="/" class="flex items-center gap-3 text-[#173f3a] no-underline">
+            <span class="grid h-10 w-10 place-items-center rounded-[13px] bg-[#d8eee4] text-[#17694f]"><i data-lucide="messages-square" class="h-5 w-5"></i></span>
+            <span class="text-[15px] font-bold">SmartChat <span class="font-medium text-[#71827c]">/ Blip</span></span>
+          </a>
+          <span class="rounded-full bg-[#e8f4ed] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-[#28704f]">Gateway</span>
+        </div>
+        <div class="px-5 pb-3 pt-7">
+          <p class="mb-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[#82918b]">Workspace</p>
+          <h1 class="text-[19px] font-bold tracking-[-0.02em] text-[#233a35]">Conversas</h1>
+        </div>
+        <button type="button" class="mx-3 flex items-center gap-3 rounded-[12px] border border-[#dce9e2] bg-[#f0f7f3] px-3 py-3.5 text-left">
+          <span class="relative grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#cfe9dc] text-[#17694f]">
+            <i data-lucide="bot" class="h-[21px] w-[21px]"></i>
+            <span class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-[#f0f7f3] bg-[#38a66b]"></span>
+          </span>
+          <span class="min-w-0 flex-1">
+            <span class="flex items-center justify-between gap-2">
+              <span class="truncate text-[13px] font-bold text-[#26433b]">Assistente virtual</span>
+              <span class="text-[10px] text-[#82918b]">agora</span>
+            </span>
+            <span class="mt-1 block truncate text-[12px] text-[#6d7f77]">SmartChat AI Gateway - Blip</span>
+          </span>
+        </button>
+        <div class="mt-auto border-t border-[#e7ece9] px-5 py-5">
+          <div class="flex items-center gap-2.5">
+            <span class="grid h-9 w-9 place-items-center rounded-full bg-[#e9f1ed] text-[#517269]"><i data-lucide="activity" class="h-4 w-4"></i></span>
+            <span>
+              <span class="block text-[12px] font-semibold text-[#3d554d]">Serviço online</span>
+              <span class="mt-0.5 block text-[11px] text-[#87958f]">Conectado ao gateway</span>
+            </span>
+            <span class="ml-auto h-2 w-2 rounded-full bg-[#39a56a]"></span>
+          </div>
+        </div>
+      </aside>
+
+      <section class="flex min-w-0 flex-1 flex-col" aria-label="Conversa com o assistente">
+        <header class="z-10 flex min-h-[76px] items-center gap-3 border-b border-[#e7ece9] bg-white px-4 sm:px-6">
+          <span class="relative grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#d7eee3] text-[#17694f]">
+            <i data-lucide="bot" class="h-[22px] w-[22px]"></i>
+            <span class="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-[#38a66b]"></span>
+          </span>
+          <div class="min-w-0 flex-1">
+            <h2 class="truncate text-[14px] font-bold text-[#203a34] sm:text-[15px]">SmartChat AI Gateway - Blip</h2>
+            <p class="mt-0.5 flex items-center gap-1.5 text-[11px] text-[#74857e] sm:text-[12px]">
+              <span class="h-1.5 w-1.5 rounded-full bg-[#38a66b]"></span> Online · Assistente virtual
+            </p>
+          </div>
+          <button id="clear-chat" type="button" title="Limpar conversa" aria-label="Limpar conversa" class="grid h-10 w-10 shrink-0 place-items-center rounded-full text-[#71827b] transition hover:bg-[#f1f5f2] hover:text-[#25483d]">
+            <i data-lucide="rotate-ccw" class="h-[18px] w-[18px]"></i>
+          </button>
+        </header>
+
+        <div id="messages" class="chat-pattern scrollbar-thin flex flex-1 flex-col gap-3 overflow-y-auto px-4 py-6 sm:px-8 sm:py-8" aria-live="polite" aria-relevant="additions">
+          <div class="mx-auto mb-2 rounded-full border border-[#dbe5df] bg-white/85 px-3 py-1.5 text-[10px] font-semibold text-[#71827b] shadow-sm sm:text-[11px]">HOJE</div>
+          <div class="flex max-w-[88%] items-end gap-2 sm:max-w-[75%]">
+            <span class="mb-1 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#d7eee3] text-[#17694f]"><i data-lucide="bot" class="h-4 w-4"></i></span>
+            <div class="rounded-[16px] rounded-bl-[5px] bg-white px-4 py-3 shadow-[0_2px_8px_rgba(29,55,47,0.06)]">
+              <p class="text-[13px] leading-[1.65] text-[#354a43] sm:text-[14px]">Olá! Sou o assistente virtual da SmartChat. Como posso ajudar você hoje?</p>
+              <time class="mt-1.5 block text-right text-[10px] text-[#99a69f]" data-time>agora</time>
+            </div>
+          </div>
+        </div>
+
+        <footer class="border-t border-[#e7ece9] bg-white px-3 pb-3 pt-3 sm:px-6 sm:pb-5 sm:pt-4">
+          <form id="chat-form" class="mx-auto flex max-w-[850px] items-end gap-2 rounded-[16px] border border-[#dfe8e3] bg-[#fafcfb] p-1.5 pl-4 shadow-[0_2px_8px_rgba(35,58,50,0.04)] focus-within:border-[#80b99b] focus-within:ring-4 focus-within:ring-[#e7f3ec]">
+            <label for="message-input" class="sr-only">Digite sua mensagem</label>
+            <input id="message-input" name="message" type="text" autocomplete="off" placeholder="Digite sua mensagem..." class="h-11 min-w-0 flex-1 bg-transparent text-[13px] text-[#2e453d] outline-none placeholder:text-[#9aa8a1] sm:text-[14px]" />
+            <button id="send-button" type="submit" title="Enviar mensagem" aria-label="Enviar mensagem" class="grid h-11 w-11 shrink-0 place-items-center rounded-[12px] bg-[#17694f] text-white transition hover:bg-[#12583f] disabled:cursor-not-allowed disabled:opacity-50">
+              <i data-lucide="send" class="h-[18px] w-[18px]"></i>
+            </button>
+          </form>
+          <p class="mx-auto mt-2.5 max-w-[850px] text-center text-[10px] text-[#9aa69f]">SmartChat AI Gateway · Blip</p>
+        </footer>
+      </section>
+    </main>
+
+    <script>
+      const messages = document.getElementById("messages");
+      const form = document.getElementById("chat-form");
+      const input = document.getElementById("message-input");
+      const sendButton = document.getElementById("send-button");
+
+      function refreshIcons() {
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      function scrollToLatest() {
+        messages.scrollTop = messages.scrollHeight;
+      }
+
+      function addMessage(text, sender) {
+        const row = document.createElement("div");
+        const bubble = document.createElement("div");
+        const paragraph = document.createElement("p");
+        const time = document.createElement("time");
+
+        row.className = sender === "user"
+          ? "ml-auto flex max-w-[88%] items-end sm:max-w-[75%]"
+          : "flex max-w-[88%] items-end gap-2 sm:max-w-[75%]";
+        bubble.className = sender === "user"
+          ? "rounded-[16px] rounded-br-[5px] bg-[#d8f1e2] px-4 py-3 shadow-[0_2px_8px_rgba(29,55,47,0.05)]"
+          : "rounded-[16px] rounded-bl-[5px] bg-white px-4 py-3 shadow-[0_2px_8px_rgba(29,55,47,0.06)]";
+        paragraph.className = "whitespace-pre-wrap break-words text-[13px] leading-[1.65] text-[#354a43] sm:text-[14px]";
+        paragraph.textContent = text;
+        time.className = "mt-1.5 block text-right text-[10px] text-[#99a69f]";
+        time.dateTime = new Date().toISOString();
+        time.textContent = new Intl.DateTimeFormat("pt-BR", { hour: "2-digit", minute: "2-digit" }).format(new Date());
+        bubble.append(paragraph, time);
+
+        if (sender === "assistant") {
+          const avatar = document.createElement("span");
+          avatar.className = "mb-1 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#d7eee3] text-[#17694f]";
+          avatar.innerHTML = '<i data-lucide="bot" class="h-4 w-4"></i>';
+          row.append(avatar, bubble);
+        } else {
+          row.append(bubble);
+        }
+
+        messages.append(row);
+        refreshIcons();
+        scrollToLatest();
+      }
+
+      function addTransferNotice() {
+        const notice = document.createElement("div");
+        notice.setAttribute("role", "alert");
+        notice.className = "mx-auto flex w-full max-w-[520px] items-start gap-2.5 rounded-[12px] border border-[#e8c982] bg-[#fff8e7] px-4 py-3 text-[#775a1e] shadow-sm";
+        notice.innerHTML = '<i data-lucide="headset" class="mt-0.5 h-[17px] w-[17px] shrink-0"></i><p class="text-[12px] font-semibold leading-relaxed sm:text-[13px]">Conversa transferida para um atendente humano. Um especialista continuará o atendimento.</p>';
+        messages.append(notice);
+        refreshIcons();
+        scrollToLatest();
+      }
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const message = input.value.trim();
+        if (!message || sendButton.disabled) return;
+
+        addMessage(message, "user");
+        input.value = "";
+        sendButton.disabled = true;
+
+        try {
+          const response = await fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: "demo", message }),
+          });
+          if (!response.ok) throw new Error("Falha na resposta do servidor");
+
+          const result = await response.json();
+          if (result.transferred_to_human) addTransferNotice();
+          addMessage(result.response, "assistant");
+        } catch (error) {
+          addMessage("Não foi possível conectar ao serviço agora. Tente novamente em instantes.", "assistant");
+        } finally {
+          sendButton.disabled = false;
+          input.focus();
+        }
+      });
+
+      document.getElementById("clear-chat").addEventListener("click", () => {
+        messages.replaceChildren();
+        addMessage("Olá! Sou o assistente virtual da SmartChat. Como posso ajudar você hoje?", "assistant");
+        input.focus();
+      });
+
+      refreshIcons();
+    </script>
+  </body>
+</html>

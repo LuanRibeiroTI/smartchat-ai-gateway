@@ -1,4 +1,8 @@
+from pathlib import Path
+
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from langchain_core.documents import Document
 from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -9,6 +13,9 @@ app = FastAPI(
     description="Gateway de atendimento inteligente com RAG e Roteamento de Intenções para a Blip",
     version="1.0.0"
 )
+
+STATIC_DIR = Path(__file__).parent / "static"
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 faq_documents = [
     Document(
@@ -43,9 +50,9 @@ class ChatResponse(BaseModel):
     response: str
     transferred_to_human: bool
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 def health_check():
-    return {"status": "online", "service": "SmartChat AI Gateway running successfully"}
+    return HTMLResponse(content=(STATIC_DIR / "index.html").read_text(encoding="utf-8"))
 
 @app.post("/chat", response_model=ChatResponse)
 def process_chat(payload: ChatRequest):
