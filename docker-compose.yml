@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  smartchat-api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=sua_chave_aqui
+    volumes:
+      - .:/app
